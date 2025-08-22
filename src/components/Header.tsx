@@ -1,9 +1,11 @@
 import { Button } from "@/components/ui/button";
-import { ShoppingCart, User } from "lucide-react";
+import { ShoppingCart, User, LogOut } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
+import { useAuth } from "@/hooks/useAuth";
 
 const Header = () => {
   const location = useLocation();
+  const { user, signOut } = useAuth();
 
   return (
     <header className="bg-background border-b border-border">
@@ -59,11 +61,33 @@ const Header = () => {
                 <ShoppingCart className="w-4 h-4" />
               </Link>
             </Button>
-            <Button variant="ocp" size="sm" asChild>
-              <Link to="/connexion">
-                CONNEXION
-              </Link>
-            </Button>
+            
+            {user ? (
+              <div className="flex items-center space-x-2">
+                <Button variant="ghost" size="sm" asChild>
+                  <Link to="/dashboard">
+                    <User className="w-4 h-4 mr-1" />
+                    Dashboard
+                  </Link>
+                </Button>
+                <Button variant="ghost" size="sm" onClick={signOut}>
+                  <LogOut className="w-4 h-4" />
+                </Button>
+              </div>
+            ) : (
+              <div className="flex items-center space-x-2">
+                <Button variant="ghost" size="sm" asChild>
+                  <Link to="/register">
+                    S'inscrire
+                  </Link>
+                </Button>
+                <Button variant="ocp" size="sm" asChild>
+                  <Link to="/connexion">
+                    CONNEXION
+                  </Link>
+                </Button>
+              </div>
+            )}
           </div>
         </div>
       </div>
