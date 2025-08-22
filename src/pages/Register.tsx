@@ -6,11 +6,13 @@ import { useState } from "react";
 import { Link, Navigate } from "react-router-dom";
 import { useAuth } from "@/hooks/useAuth";
 
-const Connexion = () => {
+const Register = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [fullName, setFullName] = useState("");
+  const [company, setCompany] = useState("");
   const [loading, setLoading] = useState(false);
-  const { signIn, user } = useAuth();
+  const { signUp, user } = useAuth();
 
   // Redirect if already logged in
   if (user) {
@@ -21,17 +23,14 @@ const Connexion = () => {
     e.preventDefault();
     setLoading(true);
     
-    const { error } = await signIn(email, password);
-    if (!error) {
-      // Navigation will happen automatically via auth state change
-    }
+    await signUp(email, password, fullName);
     setLoading(false);
   };
 
   return (
     <div className="min-h-screen bg-background">
       <div className="grid grid-cols-1 lg:grid-cols-2 min-h-screen">
-        {/* Left side - Login Form */}
+        {/* Left side - Register Form */}
         <div className="flex items-center justify-center p-8">
           <div className="w-full max-w-md">
             <div className="text-center mb-8">
@@ -45,22 +44,45 @@ const Connexion = () => {
 
             <Card className="shadow-card">
               <CardHeader className="text-center">
-                <CardTitle className="text-2xl font-bold">Connectez-vous</CardTitle>
+                <CardTitle className="text-2xl font-bold">Créer un compte</CardTitle>
                 <CardDescription>
-                  Accédez à votre espace client pour gérer vos commandes et télécharger vos factures
+                  Rejoignez OCP Solutions pour accéder à nos produits chimiques de qualité
                 </CardDescription>
               </CardHeader>
               <CardContent>
                 <form onSubmit={handleSubmit} className="space-y-4">
                   <div className="space-y-2">
+                    <Label htmlFor="fullName">👤 Nom complet</Label>
+                    <Input
+                      id="fullName"
+                      type="text"
+                      placeholder="Votre nom complet"
+                      value={fullName}
+                      onChange={(e) => setFullName(e.target.value)}
+                      required
+                    />
+                  </div>
+                  
+                  <div className="space-y-2">
                     <Label htmlFor="email">📧 Email</Label>
                     <Input
                       id="email"
                       type="email"
-                      placeholder="admin@ocp.ma"
+                      placeholder="votre@email.com"
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
                       required
+                    />
+                  </div>
+
+                  <div className="space-y-2">
+                    <Label htmlFor="company">🏢 Entreprise (optionnel)</Label>
+                    <Input
+                      id="company"
+                      type="text"
+                      placeholder="Nom de votre entreprise"
+                      value={company}
+                      onChange={(e) => setCompany(e.target.value)}
                     />
                   </div>
                   
@@ -69,20 +91,12 @@ const Connexion = () => {
                     <Input
                       id="password"
                       type="password"
-                      placeholder="••••••••"
+                      placeholder="Créer un mot de passe"
                       value={password}
                       onChange={(e) => setPassword(e.target.value)}
                       required
+                      minLength={6}
                     />
-                  </div>
-
-                  <div className="flex items-center justify-between">
-                    <div className="text-sm">
-                      <span className="text-muted-foreground">Se souvenir de moi</span>
-                    </div>
-                    <Link to="/forgot-password" className="text-sm text-ocp-green hover:underline">
-                      Mot de passe oublié ?
-                    </Link>
                   </div>
 
                   <Button 
@@ -92,14 +106,14 @@ const Connexion = () => {
                     type="submit"
                     disabled={loading}
                   >
-                    {loading ? "Connexion..." : "🔐 Se connecter"}
+                    {loading ? "Création..." : "🚀 Créer mon compte"}
                   </Button>
                 </form>
 
                 <p className="text-center text-sm text-muted-foreground mt-4">
-                  Pas encore de compte ?{" "}
-                  <Link to="/register" className="text-ocp-green hover:underline">
-                    S'inscrire
+                  Déjà un compte ?{" "}
+                  <Link to="/connexion" className="text-ocp-green hover:underline">
+                    Se connecter
                   </Link>
                 </p>
               </CardContent>
@@ -112,18 +126,18 @@ const Connexion = () => {
           <div className="text-center text-white max-w-md">
             <div className="mb-8">
               <div className="w-20 h-20 bg-white/20 rounded-2xl flex items-center justify-center mx-auto mb-6">
-                <span className="text-3xl">🧪</span>
+                <span className="text-3xl">⚗️</span>
               </div>
               <h2 className="text-3xl font-bold mb-4">
-                Bienvenue chez OCP Solutions
+                Rejoignez OCP Solutions
               </h2>
               <p className="text-lg text-white/90 mb-6">
-                Accédez à votre espace client pour gérer vos
-                commandes et télécharger vos factures exclusives.
+                Accédez à notre catalogue complet de produits chimiques 
+                et bénéficiez de nos services exclusifs.
               </p>
               <Button variant="outline-hero" size="lg" asChild>
                 <Link to="/catalogue">
-                  🛒 Visiter le catalogue
+                  🛒 Découvrir nos produits
                 </Link>
               </Button>
             </div>
@@ -134,4 +148,4 @@ const Connexion = () => {
   );
 };
 
-export default Connexion;
+export default Register;
