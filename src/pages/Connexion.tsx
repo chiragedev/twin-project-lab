@@ -3,30 +3,11 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { useState } from "react";
-import { Link, Navigate } from "react-router-dom";
-import { useAuth } from "@/hooks/useAuth";
+import { Link } from "react-router-dom";
 
 const Connexion = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [loading, setLoading] = useState(false);
-  const { signIn, user } = useAuth();
-
-  // Redirect if already logged in
-  if (user) {
-    return <Navigate to="/dashboard" replace />;
-  }
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setLoading(true);
-    
-    const { error } = await signIn(email, password);
-    if (!error) {
-      // Navigation will happen automatically via auth state change
-    }
-    setLoading(false);
-  };
 
   return (
     <div className="min-h-screen bg-background">
@@ -50,53 +31,45 @@ const Connexion = () => {
                   Accédez à votre espace client pour gérer vos commandes et télécharger vos factures
                 </CardDescription>
               </CardHeader>
-              <CardContent>
-                <form onSubmit={handleSubmit} className="space-y-4">
-                  <div className="space-y-2">
-                    <Label htmlFor="email">📧 Email</Label>
-                    <Input
-                      id="email"
-                      type="email"
-                      placeholder="admin@ocp.ma"
-                      value={email}
-                      onChange={(e) => setEmail(e.target.value)}
-                      required
-                    />
-                  </div>
-                  
-                  <div className="space-y-2">
-                    <Label htmlFor="password">🔒 Mot de passe</Label>
-                    <Input
-                      id="password"
-                      type="password"
-                      placeholder="••••••••"
-                      value={password}
-                      onChange={(e) => setPassword(e.target.value)}
-                      required
-                    />
-                  </div>
+              <CardContent className="space-y-4">
+                <div className="space-y-2">
+                  <Label htmlFor="email">📧 admin@ocp.ma</Label>
+                  <Input
+                    id="email"
+                    type="email"
+                    placeholder="Votre email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                  />
+                </div>
+                
+                <div className="space-y-2">
+                  <Label htmlFor="password">🔒 ••••••••</Label>
+                  <Input
+                    id="password"
+                    type="password"
+                    placeholder="Votre mot de passe"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                  />
+                </div>
 
-                  <div className="flex items-center justify-between">
-                    <div className="text-sm">
-                      <span className="text-muted-foreground">Se souvenir de moi</span>
-                    </div>
-                    <Link to="/forgot-password" className="text-sm text-ocp-green hover:underline">
-                      Mot de passe oublié ?
-                    </Link>
+                <div className="flex items-center justify-between">
+                  <div className="text-sm">
+                    <span className="text-muted-foreground">Se souvenir de moi</span>
                   </div>
+                  <Link to="/forgot-password" className="text-sm text-ocp-green hover:underline">
+                    Mot de passe oublié ?
+                  </Link>
+                </div>
 
-                  <Button 
-                    variant="ocp" 
-                    className="w-full" 
-                    size="lg" 
-                    type="submit"
-                    disabled={loading}
-                  >
-                    {loading ? "Connexion..." : "🔐 Se connecter"}
-                  </Button>
-                </form>
+                <Button variant="ocp" className="w-full" size="lg" asChild>
+                  <Link to="/dashboard">
+                    🔐 Se connecter
+                  </Link>
+                </Button>
 
-                <p className="text-center text-sm text-muted-foreground mt-4">
+                <p className="text-center text-sm text-muted-foreground">
                   Pas encore de compte ?{" "}
                   <Link to="/register" className="text-ocp-green hover:underline">
                     S'inscrire
