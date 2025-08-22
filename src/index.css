@@ -2,41 +2,62 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
-All colors MUST be HSL.
-*/
+/* OCP Solutions Design System - Professional Chemical Solutions Theme */
 
 @layer base {
   :root {
     --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
+    --foreground: 200 15% 8%;
 
     --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
+    --card-foreground: 200 15% 8%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
+    --popover-foreground: 200 15% 8%;
 
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
+    /* OCP Green Theme */
+    --primary: 158 64% 32%;
+    --primary-foreground: 0 0% 98%;
+    --primary-light: 158 45% 45%;
+    --primary-dark: 158 75% 25%;
 
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
+    --secondary: 210 16% 93%;
+    --secondary-foreground: 200 15% 8%;
 
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
+    --muted: 210 16% 95%;
+    --muted-foreground: 200 10% 45%;
 
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
+    --accent: 158 30% 90%;
+    --accent-foreground: 158 64% 32%;
 
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 98%;
 
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
+    --border: 220 13% 91%;
+    --input: 220 13% 91%;
+    --ring: 158 64% 32%;
 
-    --radius: 0.5rem;
+    --radius: 0.75rem;
+
+    /* OCP Custom Colors */
+    --ocp-green: 158 64% 32%;
+    --ocp-green-light: 158 45% 45%;
+    --ocp-green-dark: 158 75% 25%;
+    --ocp-blue: 217 91% 60%;
+    --ocp-orange: 25 95% 53%;
+    --ocp-purple: 262 83% 58%;
+    --ocp-pink: 330 81% 60%;
+    
+    /* Gradients */
+    --gradient-primary: linear-gradient(135deg, hsl(var(--ocp-green-dark)), hsl(var(--ocp-green)));
+    --gradient-hero: linear-gradient(135deg, hsl(var(--ocp-green-dark) / 0.9), hsl(var(--ocp-green) / 0.7));
+    
+    /* Shadows */
+    --shadow-elegant: 0 10px 30px -10px hsl(var(--ocp-green) / 0.3);
+    --shadow-card: 0 4px 20px -4px hsl(var(--ocp-green) / 0.15);
+    
+    /* Transitions */
+    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 
     --sidebar-background: 0 0% 98%;
 
@@ -101,5 +122,28 @@ All colors MUST be HSL.
 
   body {
     @apply bg-background text-foreground;
+  }
+}
+
+/* OCP Custom Utilities */
+@layer utilities {
+  .gradient-primary {
+    background: var(--gradient-primary);
+  }
+  
+  .gradient-hero {
+    background: var(--gradient-hero);
+  }
+  
+  .shadow-elegant {
+    box-shadow: var(--shadow-elegant);
+  }
+  
+  .shadow-card {
+    box-shadow: var(--shadow-card);
+  }
+  
+  .transition-smooth {
+    transition: var(--transition-smooth);
   }
 }
